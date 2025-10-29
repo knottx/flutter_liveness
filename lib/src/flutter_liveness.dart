@@ -1,4 +1,4 @@
-import 'package:flutter_liveness/src/engine.dart';
+import 'package:flutter_liveness/src/liveness_engine.dart';
 import 'package:flutter_liveness/src/liveness_options.dart';
 import 'package:flutter_liveness/src/liveness_result.dart';
 import 'package:flutter_liveness/src/tflite_runner.dart';

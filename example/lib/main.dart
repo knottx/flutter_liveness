@@ -69,7 +69,7 @@ class _MyHomePageState extends State<MyHomePage> {
         'Liveness: ${result!.isLive ? 'LIVE' : 'SPOOF'}',
         'Score: ${result!.score.toStringAsFixed(3)}',
         'Laplacian: ${result!.laplacian.toStringAsFixed(1)}',
-        'Time: ${result!.time.inMilliseconds} ms',
+        'Duration: ${result!.duration.inMilliseconds} ms',
       ].join('\n');
     } else {
       message = 'Tap ▶ to analyze';

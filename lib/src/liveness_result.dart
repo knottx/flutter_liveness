@@ -6,18 +6,18 @@ class LivenessResult {
 
   /// Clarity metric
   final int laplacian;
-  final Duration time;
+  final Duration duration;
 
   const LivenessResult({
     required this.isLive,
     required this.score,
     required this.laplacian,
-    required this.time,
+    required this.duration,
   });
 
   @override
   String toString() {
-    return 'LivenessResult(isLive: $isLive, score: $score, laplacian: $laplacian, time: $time)';
+    return 'LivenessResult(isLive: $isLive, score: $score, laplacian: $laplacian, duration: $duration)';
   }
 
   @override
@@ -32,7 +32,7 @@ class LivenessResult {
         other.isLive == isLive &&
         other.score == score &&
         other.laplacian == laplacian &&
-        other.time == time;
+        other.duration == duration;
   }
 
   @override
@@ -41,7 +41,7 @@ class LivenessResult {
       isLive,
       score,
       laplacian,
-      time,
+      duration,
     );
   }
 }

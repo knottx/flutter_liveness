@@ -28,22 +28,25 @@ class LivenessEngine {
         isLive: false,
         score: 1,
         laplacian: lap,
-        time: Duration.zero,
+        duration: Duration.zero,
       );
     }
 
     final input = toNHWC(face);
     final t0 = DateTime.now();
-    final prob1 = await _runner.inferProb(input); // P(spoof)
+
+    /// Probability of class=1 (spoof)
+    final prob1 = await _runner.inferProb(input);
+
     final dt = DateTime.now().difference(t0);
     final score = (1.0 - prob1);
     final isLive = score >= _opt.threshold;
 
     return LivenessResult(
       isLive: isLive,
-      score: score,
+      score: prob1,
       laplacian: lap,
-      time: dt,
+      duration: dt,
     );
   }
 }

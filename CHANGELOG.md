@@ -1,18 +1,23 @@
+## 1.0.0
+
+- Update Sigmoid score (probability of class=1)
+- Update result duration
+
 ## 0.0.2
 
-- update LivenessResult
+- Update LivenessResult
 
 ## 0.0.1+3
 
-- update meta data
+- Update meta data
 
 ## 0.0.1+2
 
-- update meta data
+- Update meta data
 
 ## 0.0.1+1
 
-- update meta data
+- Update meta data
 
 ## 0.0.1
 
