@@ -56,7 +56,7 @@ Future<void> check(Uint8List faceBytes) async {
   print("Live: ${result.isLive}");
   print("Score (P(spoof)): ${result.score}");
   print("Laplacian: ${result.laplacian}");
-  print("Inference time: ${result.time.inMilliseconds} ms");
+  print("Inference time: ${result.duration.inMilliseconds} ms");
 }
 ```
 
