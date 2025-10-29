@@ -1,4 +1,8 @@
-## 1.0.0
+## 0.0.1+1
+
+- update meta data
+
+## 0.0.1
 
 - On-device face liveness / anti-spoofing detection
 - Bundled MobileNetV2 TFLite model (MIT licensed)
