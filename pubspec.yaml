@@ -1,6 +1,6 @@
 name: flutter_liveness
 description: "On-device face liveness detection for Flutter using a MobileNetV2 model. Detect spoof attacks from photos and videos, no internet required."
-version: 0.0.1+2
+version: 0.0.1+3
 homepage: https://github.com/knottx/flutter_liveness
 repository: https://github.com/knottx/flutter_liveness
 issue_tracker: https://github.com/knottx/flutter_liveness/issues
