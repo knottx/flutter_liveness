@@ -1,0 +1,42 @@
+include: package:flutter_lints/flutter.yaml
+
+formatter:
+  page_width: 80
+  trailing_commas: preserve
+
+linter:
+  rules:
+    always_use_package_imports: true
+    always_declare_return_types: true
+    avoid_init_to_null: true
+    avoid_print: true
+    prefer_const_constructors: true
+    prefer_const_constructors_in_immutables: true
+    prefer_const_literals_to_create_immutables: true
+    prefer_is_empty: true
+    prefer_is_not_empty: true
+    prefer_is_not_operator: true
+    prefer_single_quotes: true
+    require_trailing_commas: true
+    unnecessary_breaks: true
+    unnecessary_overrides: false
+    unrelated_type_equality_checks: true
+
+analyzer:
+  errors:
+    always_use_package_imports: error
+    always_declare_return_types: error
+    avoid_init_to_null: error
+    avoid_print: error
+    prefer_const_constructors: error
+    prefer_const_constructors_in_immutables: error
+    prefer_const_literals_to_create_immutables: error
+    prefer_is_empty: error
+    prefer_is_not_empty: error
+    prefer_is_not_operator: error
+    prefer_single_quotes: error
+    require_trailing_commas: error
+    unnecessary_breaks: error
+    unrelated_type_equality_checks: error
+    unused_element: error
+    unused_local_variable: error
