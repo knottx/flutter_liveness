@@ -19,7 +19,8 @@ Lightweight on-device face liveness detection for Flutter, powered by MobileNetV
 This package uses a pre-trained MobileNetV2 face liveness model trained as described in:
 
 > Using MobileNetV2 ([Zawar, et al., 2023](https://www.atlantis-press.com/proceedings/acvait-22/125989871))
-> from the open-source project: [biometric-technologies/liveness-detection-model](https://github.com/biometric-technologies/liveness-detection-model)
+> 
+> From the open-source project: [biometric-technologies/liveness-detection-model](https://github.com/biometric-technologies/liveness-detection-model)
 
 Model licensed under MIT, included with attribution.
 
