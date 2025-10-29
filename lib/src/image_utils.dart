@@ -19,9 +19,9 @@ List<List<List<List<double>>>> toNHWC(imglib.Image img) {
       (i) => List.generate(w, (j) {
         final p = resized.getPixel(j, i);
         return [
-          norm(p.r.round()),
-          norm(p.g.round()),
-          norm(p.b.round()),
+          norm(p.r.toInt()),
+          norm(p.g.toInt()),
+          norm(p.b.toInt()),
         ];
       }),
     ),

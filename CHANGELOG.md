@@ -1,3 +1,7 @@
+## 0.0.2
+
+- update LivenessResult
+
 ## 0.0.1+3
 
 - update meta data

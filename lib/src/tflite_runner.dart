@@ -1,11 +1,10 @@
-import 'package:flutter_liveness/src/engine.dart';
 import 'package:tflite_flutter/tflite_flutter.dart' as tfl;
 
-class TFLiteRunner implements ModelRunner {
+class TFLiteRunner {
   final tfl.Interpreter _interp;
   final tfl.IsolateInterpreter _iso;
 
-  TFLiteRunner._(this._interp, this._iso);
+  const TFLiteRunner._(this._interp, this._iso);
 
   /// Loads the **bundled** model from assets in this package.
   static Future<TFLiteRunner> create() async {
@@ -16,7 +15,6 @@ class TFLiteRunner implements ModelRunner {
     return TFLiteRunner._(i, iso);
   }
 
-  @override
   Future<double> inferProb(List<List<List<List<double>>>> nhwc) async {
     // Many MobileNetV2 binary classifiers export one sigmoid output [1,1] or [1].
     // We'll read it as a 2D shape [1,1] to be safe.
@@ -31,7 +29,6 @@ class TFLiteRunner implements ModelRunner {
     return p1;
   }
 
-  @override
   Future<void> dispose() async {
     await _iso.close();
     _interp.close();

@@ -2,17 +2,11 @@ import 'package:flutter_liveness/src/image_utils.dart';
 import 'package:flutter_liveness/src/laplacian.dart';
 import 'package:flutter_liveness/src/liveness_options.dart';
 import 'package:flutter_liveness/src/liveness_result.dart';
+import 'package:flutter_liveness/src/tflite_runner.dart';
 import 'package:image/image.dart' as imglib;
 
-abstract class ModelRunner {
-  /// Returns a single float probability (sigmoid) or a 2-class softmax vector.
-  /// We’ll standardize to a **single double** here (probability of class=1).
-  Future<double> inferProb(List<List<List<List<double>>>> nhwc);
-  Future<void> dispose();
-}
-
 class LivenessEngine {
-  final ModelRunner _runner;
+  final TFLiteRunner _runner;
   final LivenessOptions _opt;
 
   const LivenessEngine(
@@ -32,7 +26,7 @@ class LivenessEngine {
     if (_opt.applyLaplacianGate && lap < _opt.laplacianThreshold) {
       return LivenessResult(
         isLive: false,
-        score: 0.0,
+        score: 1,
         laplacian: lap,
         time: Duration.zero,
       );
@@ -42,12 +36,12 @@ class LivenessEngine {
     final t0 = DateTime.now();
     final prob1 = await _runner.inferProb(input); // P(spoof)
     final dt = DateTime.now().difference(t0);
-    final liveScore = (1.0 - prob1);
-    final isLive = liveScore >= _opt.threshold;
+    final score = (1.0 - prob1);
+    final isLive = score >= _opt.threshold;
 
     return LivenessResult(
       isLive: isLive,
-      score: prob1,
+      score: score,
       laplacian: lap,
       time: dt,
     );

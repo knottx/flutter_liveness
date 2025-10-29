@@ -6,7 +6,7 @@ import 'package:image/image.dart' as imglib;
 
 class FlutterLiveness {
   final LivenessEngine _engine;
-  final ModelRunner _runner;
+  final TFLiteRunner _runner;
 
   const FlutterLiveness._(
     this._engine,
@@ -14,12 +14,7 @@ class FlutterLiveness {
   );
 
   static Future<FlutterLiveness> create({
-    LivenessOptions options = const LivenessOptions(
-      threshold: 0.5,
-      applyLaplacianGate: true,
-      laplacianThreshold: 1000,
-      laplacePixelThreshold: 50,
-    ),
+    LivenessOptions options = const LivenessOptions(),
   }) async {
     final runner = await TFLiteRunner.create();
     final engine = LivenessEngine(runner, options);
