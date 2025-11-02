@@ -1,36 +1,87 @@
-import 'package:tflite_flutter/tflite_flutter.dart' as tfl;
+import 'dart:io';
+
+import 'package:tflite_flutter/tflite_flutter.dart';
 
 class TFLiteRunner {
-  final tfl.Interpreter _interp;
-  final tfl.IsolateInterpreter _iso;
+  final Interpreter _interp;
+  final IsolateInterpreter _iso;
 
   const TFLiteRunner._(this._interp, this._iso);
 
-  /// Loads the **bundled** model from assets in this package.
-  static Future<TFLiteRunner> create() async {
-    // The asset path under /assets/models in this package:
+  static Future<TFLiteRunner> create({
+    required bool useGpu,
+  }) async {
     const assetPath = 'packages/flutter_liveness/assets/models/model.tflite';
-    final i = await tfl.Interpreter.fromAsset(assetPath);
-    final iso = await tfl.IsolateInterpreter.create(address: i.address);
-    return TFLiteRunner._(i, iso);
-  }
+    final options = await _createOptions(useGpu: useGpu);
+    final i = await Interpreter.fromAsset(assetPath, options: options);
+    final iso = await IsolateInterpreter.create(address: i.address);
 
-  Future<double> inferProb(List<List<List<List<double>>>> nhwc) async {
-    // Many MobileNetV2 binary classifiers export one sigmoid output [1,1] or [1].
-    // We'll read it as a 2D shape [1,1] to be safe.
-    final output = List.generate(1, (_) => List.filled(1, 0.0));
-    final outputs = {0: output};
-
-    await _iso.runForMultipleInputs([nhwc], outputs);
-
-    // Probability of class=1 (model-defined). If your model outputs softmax[2],
-    // map it here and return softmax[1] instead.
-    final p1 = output[0][0];
-    return p1;
+    final runner = TFLiteRunner._(i, iso);
+    return runner;
   }
 
   Future<void> dispose() async {
     await _iso.close();
     _interp.close();
   }
+
+  Future<void> warmUp({int times = 3}) async {
+    final input = List.generate(
+      1,
+      (_) => List.generate(
+        224,
+        (_) => List.generate(
+          224,
+          (_) => [0.0, 0.0, 0.0],
+        ),
+      ),
+    );
+    for (var i = 0; i < times; i++) {
+      await inferProb(input);
+    }
+  }
+
+  Future<double> inferProb(List<List<List<List<double>>>> nhwc) async {
+    final output = List.generate(1, (_) => List.filled(1, 0.0));
+    final outputs = {0: output};
+
+    await _iso.runForMultipleInputs([nhwc], outputs);
+
+    // Probability of class=1 (model-defined).
+    final p1 = output[0][0];
+    return p1;
+  }
+}
+
+Future<InterpreterOptions> _createOptions({
+  required bool useGpu,
+}) async {
+  final options = InterpreterOptions();
+
+  if (useGpu) {
+    try {
+      if (Platform.isAndroid) {
+        var gpuDelegate = GpuDelegateV2(
+          options: GpuDelegateOptionsV2(
+            isPrecisionLossAllowed: true,
+            inferencePriority1: 2,
+          ),
+        );
+        options.addDelegate(gpuDelegate);
+      } else if (Platform.isIOS) {
+        var gpuDelegate = GpuDelegate(
+          options: GpuDelegateOptions(
+            allowPrecisionLoss: true,
+          ),
+        );
+        options.addDelegate(gpuDelegate);
+      }
+    } catch (e) {
+      options.threads = 4;
+    }
+  } else {
+    options.threads = 4;
+  }
+
+  return options;
 }

@@ -75,8 +75,8 @@ void dispose() {
 ```txt
 Live: true
 Score (P(spoof)): 0.023
-Clarity (laplacian): 1812
-Inference time: 29 ms
+Clarity (laplacian): 5939.0
+Inference time: 66 ms
 ```
 
 ## ⚙️ Settings

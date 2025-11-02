@@ -1,12 +1,10 @@
-import 'package:image/image.dart' as imglib;
+import 'package:image/image.dart' as img;
 
 int laplacianScore(
-  imglib.Image src, {
-  required int inputSize,
+  img.Image resized, {
   required int laplacePixelThreshold,
 }) {
-  final resized = imglib.copyResizeCropSquare(src, size: inputSize);
-  final gray = imglib.grayscale(resized);
+  final gray = img.grayscale(resized);
   const kernel = [
     [0, 1, 0],
     [1, -4, 1],

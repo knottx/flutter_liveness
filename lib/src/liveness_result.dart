@@ -6,6 +6,8 @@ class LivenessResult {
 
   /// Clarity metric
   final int laplacian;
+
+  /// Processing duration
   final Duration duration;
 
   const LivenessResult({
@@ -17,7 +19,11 @@ class LivenessResult {
 
   @override
   String toString() {
-    return 'LivenessResult(isLive: $isLive, score: $score, laplacian: $laplacian, duration: $duration)';
+    return 'LivenessResult(isLive: $isLive, '
+        'score: $score, '
+        'laplacian: $laplacian, '
+        'duration: $duration'
+        ')';
   }
 
   @override

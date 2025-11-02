@@ -1,4 +1,7 @@
 class LivenessOptions {
+  /// Use GPU for processing
+  final bool useGpu;
+
   /// Decision thresholds sigmoid cutoff; default 0.5
   final double threshold;
 
@@ -12,24 +15,47 @@ class LivenessOptions {
   final int laplacePixelThreshold;
 
   const LivenessOptions({
+    this.useGpu = false,
     this.threshold = 0.5,
     this.applyLaplacianGate = true,
-    this.laplacianThreshold = 1000,
-    this.laplacePixelThreshold = 50,
+    this.laplacianThreshold = 6000,
+    this.laplacePixelThreshold = 20,
   });
 
-  LivenessOptions copyWith({
-    double? threshold,
-    bool? applyLaplacianGate,
-    int? laplacianThreshold,
-    int? laplacePixelThreshold,
-  }) {
-    return LivenessOptions(
-      threshold: threshold ?? this.threshold,
-      applyLaplacianGate: applyLaplacianGate ?? this.applyLaplacianGate,
-      laplacianThreshold: laplacianThreshold ?? this.laplacianThreshold,
-      laplacePixelThreshold:
-          laplacePixelThreshold ?? this.laplacePixelThreshold,
+  @override
+  String toString() {
+    return 'LivenessOptions(useGpu: $useGpu, '
+        'threshold: $threshold, '
+        'applyLaplacianGate: $applyLaplacianGate, '
+        'laplacianThreshold: $laplacianThreshold, '
+        'laplacePixelThreshold: $laplacePixelThreshold'
+        ')';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (other.runtimeType != runtimeType) {
+      return false;
+    }
+    return other is LivenessOptions &&
+        other.useGpu == useGpu &&
+        other.threshold == threshold &&
+        other.applyLaplacianGate == applyLaplacianGate &&
+        other.laplacianThreshold == laplacianThreshold &&
+        other.laplacePixelThreshold == laplacePixelThreshold;
+  }
+
+  @override
+  int get hashCode {
+    return Object.hash(
+      useGpu,
+      threshold,
+      applyLaplacianGate,
+      laplacianThreshold,
+      laplacePixelThreshold,
     );
   }
 }

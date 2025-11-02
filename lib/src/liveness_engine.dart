@@ -1,4 +1,4 @@
-import 'package:flutter_liveness/src/image_utils.dart';
+import 'package:flutter_liveness/src/image_to_nhwc.dart';
 import 'package:flutter_liveness/src/laplacian.dart';
 import 'package:flutter_liveness/src/liveness_options.dart';
 import 'package:flutter_liveness/src/liveness_result.dart';
@@ -15,19 +15,28 @@ class LivenessEngine {
   );
 
   Future<LivenessResult> analyze(imglib.Image face) async {
-    final lap = _opt.applyLaplacianGate
-        ? laplacianScore(
-            face,
-            inputSize: 224,
-            laplacePixelThreshold: _opt.laplacePixelThreshold,
-          )
-        : 999999; // bypass
+    final resized = imglib.copyResize(
+      face,
+      width: 224,
+      height: 224,
+    );
 
-    if (_opt.applyLaplacianGate && lap < _opt.laplacianThreshold) {
+    final int laplacian;
+    if (_opt.applyLaplacianGate) {
+      laplacian = laplacianScore(
+        resized,
+        laplacePixelThreshold: _opt.laplacePixelThreshold,
+      );
+    } else {
+      /// Bypass laplacian calculation
+      laplacian = 999999;
+    }
+
+    if (_opt.applyLaplacianGate && laplacian < _opt.laplacianThreshold) {
       return LivenessResult(
         isLive: false,
         score: 1,
-        laplacian: lap,
+        laplacian: laplacian,
         duration: Duration.zero,
       );
     }
@@ -45,7 +54,7 @@ class LivenessEngine {
     return LivenessResult(
       isLive: isLive,
       score: prob1,
-      laplacian: lap,
+      laplacian: laplacian,
       duration: dt,
     );
   }
