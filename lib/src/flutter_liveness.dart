@@ -16,7 +16,10 @@ class FlutterLiveness {
   static Future<FlutterLiveness> create({
     LivenessOptions options = const LivenessOptions(),
   }) async {
-    final runner = await TFLiteRunner.create(useGpu: options.useGpu);
+    final runner = await TFLiteRunner.create(
+      useGpu: options.useGpu,
+      threads: options.threads,
+    );
     final engine = LivenessEngine(runner, options);
     return FlutterLiveness._(engine, runner);
   }

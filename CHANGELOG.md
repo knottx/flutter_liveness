@@ -1,3 +1,9 @@
+## 1.1.0
+
+- Can config use GPU
+- Can config CPU threads
+- Small improvements
+
 ## 1.0.0
 
 - Update Sigmoid score (probability of class=1)

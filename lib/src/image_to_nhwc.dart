@@ -7,10 +7,9 @@ List<List<List<List<double>>>> toNHWC(img.Image resized) {
     List.generate(
       224,
       (_) => List.generate(224, (_) {
-        final r = bytes[index++].toInt() / 255.0;
-        final g = bytes[index++].toInt() / 255.0;
-        final b = bytes[index++].toInt() / 255.0;
-
+        final r = bytes[index++] / 255.0;
+        final g = bytes[index++] / 255.0;
+        final b = bytes[index++] / 255.0;
         return [r, g, b];
       }),
     ),

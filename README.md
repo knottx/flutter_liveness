@@ -75,7 +75,7 @@ void dispose() {
 ```txt
 Live: true
 Score (P(spoof)): 0.023
-Clarity (laplacian): 5939.0
+Clarity (laplacian): 10239.0
 Inference time: 66 ms
 ```
 
@@ -87,7 +87,7 @@ You can tune thresholds:
 final liveness = await FlutterLiveness.create(
   options: LivenessOptions(
     threshold: 0.5, // sigmoid cutoff
-    laplacianThreshold: 1000, // blur block
+    laplacianThreshold: 4000, // blur block
   ),
 );
 ```
@@ -95,7 +95,7 @@ final liveness = await FlutterLiveness.create(
 ## ❗ Usage Notes
 
 - Feed cropped face images (not full camera frames)
-- Calls are fast (~20–35ms on modern devices)
+- Calls are fast (~60–70ms on modern devices)
 - Throttle analysis: ~3–5 FPS recommended
 - Do not consider this as the only security mechanism for KYC/financial apps — use it as one signal in a trust pipeline
 

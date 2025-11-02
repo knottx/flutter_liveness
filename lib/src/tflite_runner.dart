@@ -10,9 +10,10 @@ class TFLiteRunner {
 
   static Future<TFLiteRunner> create({
     required bool useGpu,
+    required int threads,
   }) async {
     const assetPath = 'packages/flutter_liveness/assets/models/model.tflite';
-    final options = await _createOptions(useGpu: useGpu);
+    final options = await _createOptions(useGpu: useGpu, threads: threads);
     final i = await Interpreter.fromAsset(assetPath, options: options);
     final iso = await IsolateInterpreter.create(address: i.address);
 
@@ -26,16 +27,15 @@ class TFLiteRunner {
   }
 
   Future<void> warmUp({int times = 3}) async {
-    final input = List.generate(
-      1,
-      (_) => List.generate(
+    final input = [
+      List.generate(
         224,
         (_) => List.generate(
           224,
           (_) => [0.0, 0.0, 0.0],
         ),
       ),
-    );
+    ];
     for (var i = 0; i < times; i++) {
       await inferProb(input);
     }
@@ -55,6 +55,7 @@ class TFLiteRunner {
 
 Future<InterpreterOptions> _createOptions({
   required bool useGpu,
+  required int threads,
 }) async {
   final options = InterpreterOptions();
 
@@ -70,17 +71,15 @@ Future<InterpreterOptions> _createOptions({
         options.addDelegate(gpuDelegate);
       } else if (Platform.isIOS) {
         var gpuDelegate = GpuDelegate(
-          options: GpuDelegateOptions(
-            allowPrecisionLoss: true,
-          ),
+          options: GpuDelegateOptions(allowPrecisionLoss: true),
         );
         options.addDelegate(gpuDelegate);
       }
     } catch (e) {
-      options.threads = 4;
+      options.threads = threads;
     }
   } else {
-    options.threads = 4;
+    options.threads = threads;
   }
 
   return options;

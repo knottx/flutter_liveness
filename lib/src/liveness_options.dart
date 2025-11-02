@@ -2,6 +2,9 @@ class LivenessOptions {
   /// Use GPU for processing
   final bool useGpu;
 
+  /// Number of threads for CPU inference
+  final int threads;
+
   /// Decision thresholds sigmoid cutoff; default 0.5
   final double threshold;
 
@@ -16,6 +19,7 @@ class LivenessOptions {
 
   const LivenessOptions({
     this.useGpu = false,
+    this.threads = 4,
     this.threshold = 0.5,
     this.applyLaplacianGate = true,
     this.laplacianThreshold = 6000,
@@ -25,6 +29,7 @@ class LivenessOptions {
   @override
   String toString() {
     return 'LivenessOptions(useGpu: $useGpu, '
+        'threads: $threads, '
         'threshold: $threshold, '
         'applyLaplacianGate: $applyLaplacianGate, '
         'laplacianThreshold: $laplacianThreshold, '
@@ -42,6 +47,7 @@ class LivenessOptions {
     }
     return other is LivenessOptions &&
         other.useGpu == useGpu &&
+        other.threads == threads &&
         other.threshold == threshold &&
         other.applyLaplacianGate == applyLaplacianGate &&
         other.laplacianThreshold == laplacianThreshold &&
@@ -52,6 +58,7 @@ class LivenessOptions {
   int get hashCode {
     return Object.hash(
       useGpu,
+      threads,
       threshold,
       applyLaplacianGate,
       laplacianThreshold,

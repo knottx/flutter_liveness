@@ -5,23 +5,27 @@ int laplacianScore(
   required int laplacePixelThreshold,
 }) {
   final gray = img.grayscale(resized);
-  const kernel = [
-    [0, 1, 0],
-    [1, -4, 1],
-    [0, 1, 0],
-  ];
-  var score = 0;
+  final bytes = gray.getBytes(order: img.ChannelOrder.red);
 
-  for (var r = 0; r <= gray.height - 3; r++) {
-    for (var c = 0; c <= gray.width - 3; c++) {
-      var conv = 0;
-      for (var kr = 0; kr < 3; kr++) {
-        for (var kc = 0; kc < 3; kc++) {
-          final px = gray.getPixel(c + kc, r + kr);
-          conv += px.r.toInt() * kernel[kr][kc];
-        }
+  int score = 0;
+
+  for (int x = 1; x < 224 - 2; x++) {
+    for (int y = 1; y < 224 - 2; y++) {
+      final int index = x * 224 + y;
+
+      final int center = bytes[index];
+
+      final int north = bytes[index - 224];
+      final int south = bytes[index + 224];
+      final int east = bytes[index + 1];
+      final int west = bytes[index - 1];
+
+      // Conv = N + S + E + W - 4*Center
+      final int conv = (north + south + east + west) - (4 * center);
+
+      if (conv.abs() > laplacePixelThreshold) {
+        score++;
       }
-      if (conv.abs() > laplacePixelThreshold) score++;
     }
   }
   return score;
