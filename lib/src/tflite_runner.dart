@@ -6,7 +6,10 @@ class TFLiteRunner {
   final Interpreter _interp;
   final IsolateInterpreter _iso;
 
-  const TFLiteRunner._(this._interp, this._iso);
+  const TFLiteRunner._(
+    this._interp,
+    this._iso,
+  );
 
   static Future<TFLiteRunner> create({
     required bool useGpu,

@@ -1,10 +1,11 @@
 class LivenessResult {
+  /// True if live, false if spoof
   final bool isLive;
 
-  /// Sigmoid score (probability of class=1)
+  /// Sigmoid score, probability of class=1 (spoof)
   final double score;
 
-  /// Clarity metric
+  /// Laplacian variance
   final int laplacian;
 
   /// Processing duration

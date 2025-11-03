@@ -86,8 +86,8 @@ You can tune thresholds:
 ```dart
 final liveness = await FlutterLiveness.create(
   options: LivenessOptions(
-    threshold: 0.5, // sigmoid cutoff
-    laplacianThreshold: 4000, // blur block
+    threshold: 0.5,
+    laplacianThreshold: 6000,
   ),
 );
 ```

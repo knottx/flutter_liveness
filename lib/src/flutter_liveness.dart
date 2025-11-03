@@ -18,7 +18,7 @@ class FlutterLiveness {
   }) async {
     final runner = await TFLiteRunner.create(
       useGpu: options.useGpu,
-      threads: options.threads,
+      threads: options.cpuThreads,
     );
     final engine = LivenessEngine(runner, options);
     return FlutterLiveness._(engine, runner);
