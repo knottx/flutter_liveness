@@ -47,6 +47,12 @@ Future<void> initLiveness() async {
 ### Analyze a face image
 
 ```dart
+/// The model input shape is (1, 224, 224, 3)
+/// - 1: batch size (single image)
+/// - 224: image height
+/// - 224: image width
+/// - 3: RGB color channels
+/// So we feed a 224x224 RGB face image into the model.
 Future<void> check(Uint8List faceBytes) async {
   final img = imglib.decodeImage(faceBytes);
   if (img == null) throw Exception("Invalid image");

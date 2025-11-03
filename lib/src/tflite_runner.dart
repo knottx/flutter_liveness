@@ -45,8 +45,10 @@ class TFLiteRunner {
   }
 
   Future<double> inferProb(List<List<List<List<double>>>> nhwc) async {
-    final output = List.generate(1, (_) => List.filled(1, 0.0));
-    final outputs = {0: output};
+    final List<List<double>> output = [
+      [0.0],
+    ];
+    final Map<int, List<List<double>>> outputs = {0: output};
 
     await _iso.runForMultipleInputs([nhwc], outputs);
 

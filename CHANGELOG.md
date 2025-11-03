@@ -1,3 +1,8 @@
+## 1.1.1
+
+- Update description
+- Small improvements
+
 ## 1.1.0
 
 - Can config use GPU

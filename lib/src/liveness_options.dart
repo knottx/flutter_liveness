@@ -22,8 +22,8 @@ class LivenessOptions {
     this.cpuThreads = 4,
     this.threshold = 0.5,
     this.applyLaplacianGate = true,
-    this.laplacianThreshold = 6000,
-    this.laplacePixelThreshold = 20,
+    this.laplacianThreshold = 3000,
+    this.laplacePixelThreshold = 50,
   });
 
   @override
